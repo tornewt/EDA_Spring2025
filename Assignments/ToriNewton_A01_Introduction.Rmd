@@ -22,15 +22,15 @@ Enter answers to the questions just below the >Answer: prompt.
 
 1. What are your previous experiences with data analytics, R, and Git? Include both formal and informal training.
 
-> Answer: 
+> Answer: I took an undergrad course on experimental methods in organismal biology where we used R and Git to analyze various data sets. That is my only previous experience and I have not used R or Git since that course.
 
 2. Are there any components of the course about which you feel confident?
 
-> Answer: 
+> Answer: I feel confident in my ability to keep up with the lectures, course material, and follow instructions for assignments.
 
 3. Are there any components of the course about which you feel apprehensive?
 
-> Answer: 
+> Answer: I am apprehensive about my current skill level with R and Git as I am not confident in my current level of knowledge. I hope to learn more in this course and build confidence and comfort with R and Git.
 
 
 ## 2) GitHub
