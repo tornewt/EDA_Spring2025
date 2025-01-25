@@ -39,11 +39,13 @@ vector1 <- c(1,2,5.3,6,-2,4) # Vector type: Numeric
 vector1
 class(vector1)
 
-vector2 <- c("one","two","three") # Vector type: 
+vector2 <- c("one","two","three") # Vector type: Character
 vector2
+class(vector2)
 
-vector3 <- c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE) # Vector type:
+vector3 <- c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE) # Vector type: Logical
 vector3
+class(vector3)
 ```
 
 ### Vector Operations
@@ -53,25 +55,25 @@ Add comments below to indicate what each operation does.(First answer is provide
 # Returns the 3rd item in the vector
 vector1[3]
 
-#
+# Max value of vector1
 max(vector1)
 
 #Create another vector of the values 10 thru 15
 vector4 <- c(10:15)
 
-#
+# Combine vectors together
 c(vector1, vector4)
 
-#
+# Vector multiplication
 vector1 * vector4
 
 #
 vector1 * 10
 
-#
+# Change everything to uppercase letters
 toupper(vector2) 
 
-#
+# Reverse what is true or false
 !vector3
 
 ```
@@ -83,17 +85,20 @@ Find a 5-day forecast of temperatures (Fahrenheit) for Durham, North Carolina. C
 ```{r Vector Exercise}
 
 #Assign to the variable 'temps_F' a vector of high temperatures in F
-
+temps_F <- c(43,47,53,54,60) # Vector type: Numeric
+temps_F
 
 #What is the average of these temperatures 
-
+mean(temps_F)
 
 #Compute the difference between each temperature and the average calculated above
-
+temps_F - mean(temps_F)
 
 #Subtract 32 and multiply by 5/9ths to create a vector in Celsius
+(temps_F - 32) * 5/9
 
-
+temps_C <- c(6.11, 8.33, 11.66, 12.22, 15.55) # Vector type: Numeric
+temps_C
 ```
 
 ## Matrices
@@ -119,24 +124,24 @@ matrix3 <- matrix(
     c("un", "deux", "trois", "quatre")
     )
   ) 
-
+matrix3
 ```
 
 ### Matrix Operations
 Add comments in the code chunk below to indicate type of vectors created and what each operation does.
 ```{r Matrix Operations}
 
-matrix1[4, 1] #
+matrix1[4, 1] # 4
 
-matrix1[4,  ] #
+matrix1[4,  ] # 4 9 14 19
 
-matrix1[ , 3] #
+matrix1[ , 3] # 11 12 13 14 15
 
 matrix1[c(12, 14)] #
 
 matrix1[c(12:14)] #
 
-matrix1[2:4, 1:3] #
+matrix1[2:4, 1:3] # 
 
 #Create a vector of 6 values
 values = c(1, 26, 24, 68, 3, 44)
@@ -163,7 +168,7 @@ matrix4['R2','C1']
 ### Exercise 1b: Matrices
 Compute the mean of column "C2" in matrix4. (Should be 14.5)
 ```{r Matrix Exercise}
-
+mean(matrix4[ , 2])
 ```
 
 
