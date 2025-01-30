@@ -247,7 +247,9 @@ Alternatively, we can tell R to import it as a factor when we read the data in
 ```{r}
 USGS.flow.data2  <- read.csv(
   file = here("./Data/Raw/USGS_Site02085000_Flow_Raw.csv"),
-  stringsAsFactors = TRUE) 
+  stringsAsFactors = TRUE,
+  colClasses = c('site_no'='factor')
+  ) 
 ```
 
 
@@ -276,7 +278,7 @@ help(as.Date)
 # An example is provided to get you started.
 # (code must be uncommented)
 today <- Sys.Date()
-format(today, format = "%B")
+format(today, format = "%b")
 #format(today, format = "")
 #format(today, format = "")
 #format(today, format = "")
@@ -314,7 +316,7 @@ We just edited our raw dataset into a processed form. We may want to return to t
 ```{r Saving data}
 write.csv(
   USGS.flow.data, 
-  file = here("/Data/Processed/USGS_Site02085000_Flow_Processed.csv"), 
+  file = here("./Data/Processed/USGS_Site02085000_Flow_Processed.csv"), 
   row.names=FALSE)
 
 ```
