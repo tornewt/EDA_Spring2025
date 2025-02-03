@@ -144,10 +144,13 @@ Prior to running this, reset your workspace (Session->Restart R) to ensure it ru
 
 ```{r Setup}
 # Load packages
+library(ggplot2) #loads ggplot2 package
 
 # Confirm working directory
+getwd()
 
 # Load the USGS flow data into a data frame
+
 
 ```
 
