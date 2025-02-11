@@ -88,10 +88,10 @@ unique rows.
 
 ```{r questions 3 thru 4}
 #3: change Date columns to be date objects
-EPAair_03_NC2018$Date <- as.Date(EPAair_03_NC2018$Date, format = "%m/%d/%y")
-EPAair_03_NC2019$Date <- as.Date(EPAair_03_NC2019$Date, format = "%m/%d/%y")
-EPAair_PM25_NC2018$Date <- as.Date(EPAair_PM25_NC2018$Date, format = "%m/%d/%y")
-EPAair_PM25_NC2019$Date <- as.Date(EPAair_PM25_NC2019$Date, format = "%m/%d/%y")
+EPAair_03_NC2018$Date <- mdy(EPAair_03_NC2018$Date)
+EPAair_03_NC2019$Date <- mdy(EPAair_03_NC2019$Date)
+EPAair_PM25_NC2018$Date <- mdy(EPAair_PM25_NC2018$Date)
+EPAair_PM25_NC2019$Date <- mdy(EPAair_PM25_NC2019$Date)
 
 #4: select the requested columns
 EPAair_03_NC2018_select <- EPAair_03_NC2018 %>% 
@@ -114,10 +114,14 @@ EPAair_PM25_NC2019_PM2.5 <- EPAair_PM25_NC2019_select %>%
   mutate(AQS_PARAMETER_DESC = "PM2.5")
 
 #6: save all four processed datasets in the Processed folder
-write.csv(EPAair_03_NC2018_select, row.names = FALSE, file = "./Data/Processed/EPAair_03_NC2018_Processed.csv")
-write.csv(EPAair_03_NC2019_select, row.names = FALSE, file = "./Data/Processed/EPAair_03_NC2019_Processed.csv")
-write.csv(EPAair_PM25_NC2018_PM2.5, row.names = FALSE, file = "./Data/Processed/EPAair_PM25_NC2018_Processed.csv")
-write.csv(EPAair_PM25_NC2019_PM2.5, row.names = FALSE, file = "./Data/Processed/EPAair_PM25_NC2019_Processed.csv")
+write.csv(EPAair_03_NC2018_select, row.names = FALSE, 
+          file = "./Data/Processed/EPAair_03_NC2018_Processed.csv")
+write.csv(EPAair_03_NC2019_select, row.names = FALSE, 
+          file = "./Data/Processed/EPAair_03_NC2019_Processed.csv")
+write.csv(EPAair_PM25_NC2018_PM2.5, row.names = FALSE, 
+          file = "./Data/Processed/EPAair_PM25_NC2018_Processed.csv")
+write.csv(EPAair_PM25_NC2019_PM2.5, row.names = FALSE, 
+          file = "./Data/Processed/EPAair_PM25_NC2019_Processed.csv")
 
 ```
 
@@ -151,7 +155,10 @@ write.csv(EPAair_PM25_NC2019_PM2.5, row.names = FALSE, file = "./Data/Processed/
 
 ```{r questions 7 thru 11}
 #7: combine the four datasets 
-Datasets_Processed_Combined <- rbind(EPAair_03_NC2018_select, EPAair_03_NC2019_select, EPAair_PM25_NC2018_PM2.5, EPAair_PM25_NC2019_PM2.5)
+Datasets_Processed_Combined <- rbind(EPAair_03_NC2018_select, 
+                                     EPAair_03_NC2019_select, 
+                                     EPAair_PM25_NC2018_PM2.5, 
+                                     EPAair_PM25_NC2019_PM2.5)
 
 #8: wrangle the dataset with a pipe function 
 #define common sites
@@ -172,16 +179,19 @@ New_Tidy_dataset <- Datasets_Processed_Combined %>%
     Year = year(Date)
   )
 #check dimensions of new dataset
-dim(New_Tidy_dataset)
+dim(New_Tidy_dataset) #The dimensions are 14752 x 9.
 
 #9: spread datasets so AQI values for ozone and PM2.5 are in separate columns
-
+spread_datasets <- pivot_wider(New_Tidy_dataset, 
+                               names_from = AQS_PARAMETER_DESC, 
+                               values_from = Mean_AQI)
 
 #10: dimensions of new tidy dataset
-dim()
+dim(spread_datasets)
 
 #11: save processed dataset
-write.csv(ENTER NEW DATASET NAME, row.names = FALSE, file = "./Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv")
+write.csv(spread_datasets, row.names = FALSE, 
+          file = "./Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv")
 
 ```
 
@@ -195,15 +205,24 @@ write.csv(ENTER NEW DATASET NAME, row.names = FALSE, file = "./Data/Processed/EP
 ```{r questions 12 and 13}
 
 #12: generate a summary data frame
-
+summary_df <- spread_datasets %>%
+  group_by(Site.Name, Month, Year) %>%
+  summarize(
+    Mean_AQI_PM2.5 = mean(PM2.5),  
+    Mean_AQI_Ozone = mean(Ozone),
+  ) %>%
+  drop_na (Mean_AQI_Ozone)
 
 #13: dimensions for summary dataset
-
-
-
+dim(summary_df)
+  
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`? Hint: replace `drop_na` with `na.omit` in part 12 and observe what happens with the dimensions of the summary date frame.
 
-> Answer: 
+> Answer: The function 'drop_na' allows us to selectively remove rows where 
+only mean ozone is NA, while keeping rows where mean PM2.5 is NA. 'na.omit' 
+removes any row that has at least one NA in any column. This means that if mean
+PM2.5 is missing but mean ozone is available, the entire row would be dropped 
+which would result in a smaller summary data frame than intended.
 
