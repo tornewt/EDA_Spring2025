@@ -83,7 +83,7 @@ NTL.phys.data.surface1 <- NTL.phys.data[NTL.phys.data$depth == 0,]
 NTL.phys.data.surface2 <- filter(NTL.phys.data, depth == 0)
 NTL.phys.data.surface3 <- filter(NTL.phys.data, depth < 0.25)
 
-# Did the methods arrive at the same result?
+# Did the methods arrive at the same result? Yes
 head(NTL.phys.data.surface1)
 dim(NTL.phys.data.surface1)
 head(NTL.phys.data.surface2)
