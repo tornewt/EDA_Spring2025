@@ -173,5 +173,6 @@ Litter.anova.plot <- ggplot(Litter, aes(y = dryMass, x = nlcdClass, color = func
   geom_boxplot()
 print(Litter.anova.plot)
 
+dev.off()
 ```
 
